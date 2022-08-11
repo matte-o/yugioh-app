@@ -1,10 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Binder from './components/binder';
+import React, { useContext } from "react";
+import DragItem from "./DragItem";
+import { Grid, GridImage, GridItem } from "./Grid";
+import GridContext from "./GridContext";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+function App() {
+  const { items, moveItem } = useContext(GridContext);
 
-  <Binder/>
+  return (
+    <div className="App">
+      <Grid>
+        {items.map(item => (
+          <DragItem key={item.id} id={item.id} onMoveItem={moveItem}>
+            <GridItem>
+              <GridImage src={item.src}></GridImage>
+            </GridItem>
+          </DragItem>
+        ))}
+      </Grid>
+    </div>
+  );
+}
 
-);
+export default App;
+view rawreact-dnd-grid-app.js hosted with ❤ by GitHub
