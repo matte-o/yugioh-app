@@ -1,25 +1,25 @@
-import React, { useContext } from "react";
-import DragItem from "./DragItem";
-import { Grid, GridImage, GridItem } from "./Grid";
-import GridContext from "./GridContext";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import initialData from './initial-data';
+import Column from './components/column';
 
-function App() {
-  const { items, moveItem } = useContext(GridContext);
+//cdreates an inheritence to Reac.tcomponent, and gives your component access to React.Components fuinctions.
+class App extends React.Component{
 
-  return (
-    <div className="App">
-      <Grid>
-        {items.map(item => (
-          <DragItem key={item.id} id={item.id} onMoveItem={moveItem}>
-            <GridItem>
-              <GridImage src={item.src}></GridImage>
-            </GridItem>
-          </DragItem>
-        ))}
-      </Grid>
-    </div>
-  );
+  state = initialData;
+
+  render(){
+
+    return this.state.columnOrder.map(columnID => {
+      const column = this.state.columns[columnID];
+      const tasks = column.taskIds.map(taskID => this.state.tasks[taskID]);
+
+      return <Column key={column.id} column={column} tasks={tasks} />;
+
+    });
+  }
+
 }
 
-export default App;
-view rawreact-dnd-grid-app.js hosted with ❤ by GitHub
+
+ReactDOM.render(<App/>, document.getElementById('root'))
